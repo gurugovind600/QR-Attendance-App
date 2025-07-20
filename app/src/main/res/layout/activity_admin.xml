@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/dateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select Date"
+        android:focusable="false"
+        android:clickable="true"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:paddingVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="username"
+        tools:ignore="HardcodedText,KeyboardInaccessibleWidget,TextFields" />
+
+    <Button
+        android:id="@+id/fetchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fetch Attendance"
+        android:minHeight="48dp"
+        android:paddingVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="username"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search by roll no"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:paddingVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="username"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SUBMIT"
+        android:layout_marginTop="10dp"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/exportButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Export to CSV"
+        android:layout_marginTop="10dp"
+        tools:ignore="HardcodedText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>
+
+
+
+

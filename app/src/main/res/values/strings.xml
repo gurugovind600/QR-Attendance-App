@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="hello_android">Hello Android!</string>
+    <string name="open_qr_scanner">Open QR Scanner</string>
+    <string-array name="months_array">
+        <item>June 2025</item>
+        <item>May 2025</item>
+        <item>April 2025</item>
+        <item>March 2025</item>
+        <item>February 2025</item>
+        <item>January 2025</item>
+        <!-- Add more as needed -->
+    </string-array>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Rounded Filled Button -->
+    <style name="RoundedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Input Field Style -->
+    <style name="ModernEditText">
+        <item name="android:backgroundTint">@color/light_gray</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <!-- Tab Button Style -->
+    <style name="TabButton.Teal" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@color/accent_teal</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TabButton.Orange" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@color/accent_orange</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+</resources>

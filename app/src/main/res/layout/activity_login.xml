@@ -1,0 +1,313 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGrey"
+    tools:ignore="HardcodedText" >
+
+    <!-- Top Left Organic Blob -->
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/top_blob"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:translationX="-100dp"
+        android:translationY="-100dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <!-- Bottom Right Organic Blob -->
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/bottom_blob"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:translationX="100dp"
+        android:translationY="100dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <!-- ✅ Student Login Card -->
+    <LinearLayout
+        android:id="@+id/studentLoginLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/card_background"
+        android:layout_centerInParent="true"
+        android:elevation="6dp">
+
+        <TextView
+            android:text="Student Login"
+            android:textColor="@color/darkText"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:autofillHints="emailAddress"
+            android:hint="Email"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="10dp"
+            android:inputType="textEmailAddress"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:autofillHints="password"
+            android:hint="Password"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/confirmPasswordEditText"
+            android:autofillHints="password"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <CheckBox
+                android:id="@+id/rememberMeCheckBox"
+                android:text="Remember Me"
+                android:textSize="14sp"
+                android:buttonTint="@color/black"
+                android:textColor="@color/darkText"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:minHeight="48dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/forgotPasswordText"
+                android:text="Forgot Password?"
+                android:textColor="@color/blueShape"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:text="LOGIN"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/registerLink"
+            android:text="Don’t have an account? Register"
+            android:textColor="@color/deepOrangeShape"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!-- ✅ Admin Login Card -->
+    <LinearLayout
+        android:id="@+id/adminLoginLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/card_background"
+        android:layout_centerInParent="true"
+        android:elevation="6dp"
+        android:visibility="gone">
+
+        <TextView
+            android:text="Admin Login"
+            android:textColor="@color/darkText"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/adminEmailEditText"
+            android:autofillHints="emailAddress"
+            android:hint="Admin Email"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="10dp"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/adminPasswordEditText"
+            android:autofillHints="password"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/adminLoginButton"
+            android:text="LOGIN"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/backToStudentLink"
+            android:text="← Back to Student Login"
+            android:textColor="@color/blueShape"
+            android:gravity="start"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- ✅ Student Register Card -->
+    <LinearLayout
+        android:id="@+id/registerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="@drawable/card_background"
+        android:layout_centerInParent="true"
+        android:elevation="6dp"
+        android:visibility="gone">
+
+        <TextView
+            android:text="Student Register"
+            android:textColor="@color/darkText"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/registerEmailEditText"
+            android:autofillHints="emailAddress"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="10dp"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/registerPasswordEditText"
+            android:autofillHints="password"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/registerConfirmPasswordEditText"
+            android:autofillHints="password"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/rollEditText"
+            android:autofillHints="roll"
+            android:hint="Roll Number"
+            android:inputType="text"
+            android:padding="14dp"
+            android:background="@drawable/rounded_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/confirmRegisterButton"
+            android:text="REGISTER"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/backToLoginLink"
+            android:text="← Back to Login"
+            android:textColor="@color/blueShape"
+            android:gravity="start"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>
+

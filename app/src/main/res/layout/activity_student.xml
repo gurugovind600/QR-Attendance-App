@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<ScrollView
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGrey"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="0.5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <TextView
+                android:id="@+id/helloTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="16dp"
+                android:text="Hello, Student "
+                android:textColor="@color/blueShape"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/bellIcon"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="Notification"
+                android:src="@drawable/ic_bell"
+                tools:ignore="HardcodedText" />
+        </RelativeLayout>
+
+        <!-- Auto Sliding Image Banner -->
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/bannerViewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="Image_Banner"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="“Your journey, your attendance, your proof.”"
+            android:textSize="16sp"
+            android:textColor="@color/darkText"
+            android:layout_marginBottom="24dp"
+            tools:ignore="HardcodedText" />
+
+        <!-- Attendance Graph Placeholder -->
+        <TextView
+            android:text="📊 Attendance Graph"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:textColor="@color/darkText"
+            android:layout_marginBottom="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:id="@+id/monthSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:spinnerMode="dropdown" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            />
+        <!-- Pie Chart -->
+
+        <!-- Bar Chart -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_height="300dp"
+            android:layout_marginTop="24dp" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:textSize="18sp"
+            android:layout_height="300dp"
+            android:layout_marginTop="24dp" />
+
+        <!-- About Section -->
+        <TextView
+            android:text="Why This App?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="8dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:text="This app was born from a real classroom problem – lack of student control in attendance tracking. We’ve created a CR-controlled solution that ensures transparency and fairness."
+            android:textSize="14sp"
+            android:textColor="@color/darkText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:text="How It Works"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:text="✓ Personalized QR ID cards\n✓ Secure CR/Faculty scanning\n✓ Real-time Firebase entries\n✓ Accurate and verifiable attendance"
+            android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/darkText"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:text="Our Future Vision"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:text="→ Biometric attendance (fingerprint, face)\n→ Full student dashboards (grades, credits, announcements)\n→ Faculty portals with report tools\n→ Campus-wide academic integration"
+            android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkText"
+            android:layout_marginBottom="24dp"
+            tools:ignore="HardcodedText" />
+
+        <!-- Logout -->
+        <Button
+            android:id="@+id/logoutButton"
+            android:text="Logout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+</ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGrey"
+    tools:ignore="HardcodedText" >
+
+    <!-- Top Left Organic Blob -->
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/top_blob"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:translationX="-100dp"
+        android:translationY="-100dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <!-- Bottom Right Organic Blob -->
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:src="@drawable/bottom_blob"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:translationX="100dp"
+        android:translationY="100dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card_background"
+        android:padding="24dp"
+        android:layout_centerInParent="true"
+        android:elevation="6dp">
+
+        <TextView
+            android:text="Student Register"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="24dp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/nameEditText"
+            android:autofillHints="username"
+            android:hint="Full Name"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:inputType="textPersonName"
+            android:padding="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            android:autofillHints="emailAddress"
+            android:hint="Email"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:inputType="textEmailAddress"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:padding="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/rollEditText"
+            android:autofillHints="roll"
+            android:hint="Roll Number"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:drawableStart="@drawable/ic_idcard"
+            android:drawablePadding="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:inputType="text"
+            android:padding="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:autofillHints="password"
+            android:hint="Password"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:padding="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            tools:ignore="HardcodedText" />
+
+        <EditText
+            android:id="@+id/confirmPasswordEditText"
+            android:autofillHints="password"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:background="@drawable/rounded_edittext"
+            android:padding="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/registerButton"
+            android:text="Register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
+        <!-- Login Link -->
+        <TextView
+            android:id="@+id/loginLink"
+            android:text="Have an account? Login"
+            android:textColor="@color/deepOrangeShape"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>
