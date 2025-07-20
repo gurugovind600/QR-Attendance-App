@@ -28,5 +28,6 @@ This is a simple and efficient QR code-based attendance system built using kotli
    ```bash
       https://github.com/gurugovind600/QR-Attendance-App.git
 
-   👨‍💻 Made by Guru Govind  
+
+ 👨‍💻 Made by Guru Govind  
 🧠 Tech Stack: Java, Firebase, Android Studio
