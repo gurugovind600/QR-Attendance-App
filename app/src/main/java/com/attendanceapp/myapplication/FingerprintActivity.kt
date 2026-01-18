@@ -122,18 +122,21 @@ class FingerprintActivity : AppCompatActivity() {
                             "name" to name,
                             "roll" to roll,
                             "id" to id,
-                            "timestamp" to "$date $time",
+                            "status" to "Present",
+                            "timestamp" to Date(),
                             "method" to "fingerprint"
                         )
 
                         db.collection("Attendance")
                             .document(date)
                             .collection("Students")
-                            .document(roll)
+                            .document(roll) // Using roll as document ID for consistency
                             .set(student)
                             .addOnSuccessListener {
+                                // Increment student stats in students collection
+                                incrementFingerprintStats(roll)
                                 runOnUiThread {
-                                    statusTextView.text = "✅ Attendance marked for $roll"
+                                    statusTextView.text = "✅ Attendance marked for Roll: $roll"
                                 }
                             }
                             .addOnFailureListener {
@@ -155,6 +158,23 @@ class FingerprintActivity : AppCompatActivity() {
             .addOnFailureListener {
                 runOnUiThread {
                     statusTextView.text = "❌ Fire_store error while matching"
+                }
+            }
+    }
+
+    // Helper function to increment presentCount for fingerprint attendance
+    private fun incrementFingerprintStats(roll: String) {
+        // Find student by roll number and increment their presentCount
+        db.collection("students")
+            .whereEqualTo("roll", roll)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val studentDoc = documents.documents[0]
+                    val userId = studentDoc.id
+                    
+                    db.collection("students").document(userId)
+                        .update("presentCount", com.google.firebase.firestore.FieldValue.increment(1))
                 }
             }
     }

@@ -60,6 +60,13 @@ dependencies {
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.test.manifest
     implementation libs.play.services.auth
+    implementation libs.androidx.material
+    // Vico Charts (Modern Compose Charts)
+    implementation libs.compose
+    implementation libs.compose.m3
+    implementation libs.core
+    implementation libs.play.services.location
+
     // QR scanner library
     implementation libs.zxing.android.embedded
     implementation libs.androidx.appcompat
@@ -70,4 +77,5 @@ dependencies {
     implementation(libs.okhttp)
     implementation libs.androidx.biometric
     implementation libs.mpandroidchart
+    implementation libs.androidx.biometric
 }

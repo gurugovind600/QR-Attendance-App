@@ -2,12 +2,15 @@ package com.attendanceapp.myapplication
 
 import android.Manifest
 import android.annotation.SuppressLint
+//import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+//import androidx.compose.ui.geometry.isEmpty
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+//import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
@@ -37,6 +40,7 @@ class QRScannerActivity : AppCompatActivity() {
         } else {
             startScanning()
         }
+
     }
 
     override fun onResume() {
@@ -63,43 +67,82 @@ class QRScannerActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun handleScanResult(content: String) {
-        Toast.makeText(this, "Scanned: $content", Toast.LENGTH_LONG).show()
+    // Replace your existing handleScanResult function with this one
+    private fun handleScanResult(scannedRollNo: String) {
+        Toast.makeText(this, "Processing Roll: $scannedRollNo", Toast.LENGTH_SHORT).show()
 
-        val parts = content.split("|")
-        if (parts.size == 3) {
-            val name = parts[0].trim()
-            val roll = parts[1].trim()
-            val id = parts[2].trim()
-
-            val student = hashMapOf(
-                "name" to name,
-                "roll" to roll,
-                "id" to id,
-                "timestamp" to java.text.SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-                    .format(java.util.Date())
-            )
-
-            val date = java.text.SimpleDateFormat("dd-MM-yyyy").format(java.util.Date())
-
-            db.collection("Attendance")                 // Top-level collection
-                .document(date)                         // Document = today's date (e.g. "24-05-25")
-                .collection("Students")                 // Sub collection under the date
-                .document(roll)                         // Document = Roll number (e.g. "CS101")
-                .set(student)                           // Save student data
-                .addOnSuccessListener {
-                    Toast.makeText(this, "✅ Attendance marked successfully", Toast.LENGTH_SHORT)
-                        .show()
+        // 1. Search for the student by Roll Number in the NEW 'students' collection
+        db.collection("students")
+            .whereEqualTo("roll", scannedRollNo.trim())
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    Toast.makeText(
+                        this,
+                        "❌ Student not found with Roll: $scannedRollNo",
+                        Toast.LENGTH_LONG
+                    ).show()
                     barcodeView.resume()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "❌ Error saving to Fire-store", Toast.LENGTH_SHORT).show()
-                    barcodeView.resume()
+                    return@addOnSuccessListener
                 }
 
-        } else {
-            Toast.makeText(this, "Note: QR is not in attendance format", Toast.LENGTH_SHORT).show()
-            barcodeView.resume()
+                // Found the student!
+                val studentDoc = documents.documents[0]
+                val userId = studentDoc.id
+                val studentName = studentDoc.getString("name") ?: "Unknown"
+
+                // 2. Mark Attendance
+                markPresentInDatabase(userId, studentName, scannedRollNo)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error checking database", Toast.LENGTH_SHORT).show()
+                barcodeView.resume()
+            }
+    }
+
+    private fun markPresentInDatabase(userId: String, name: String, roll: String) {
+        val todayDate = java.text.SimpleDateFormat("dd-MM-yyyy", java.util.Locale.getDefault())
+            .format(java.util.Date())
+
+        // A. Log it in the Daily Attendance Collection using ROLL as document ID
+        val attendanceData = hashMapOf(
+            "name" to name,
+            "roll" to roll,
+            "status" to "Present",
+            "timestamp" to java.util.Date(),
+            "method" to "qr"
+        )
+
+        db.collection("Attendance").document(todayDate).collection("Students")
+            .document(roll) // Using roll as document ID for clean, readable records
+            .set(attendanceData)
+            .addOnSuccessListener {
+
+                // B. CRITICAL: Update the Student's Graph Data (presentCount)
+                incrementStudentStats(userId, roll)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to save attendance", Toast.LENGTH_SHORT).show()
+                barcodeView.resume()
+            }
+    }
+
+    private fun incrementStudentStats(userId: String, roll: String) {
+        val studentRef = db.collection("students").document(userId)
+
+        db.runTransaction { transaction ->
+            val snapshot = transaction.get(studentRef)
+            // Read current count, default to 0 if null
+            val currentPresent = snapshot.getLong("presentCount") ?: 0
+
+            // Increment by 1
+            transaction.update(studentRef, "presentCount", currentPresent + 1)
+        }.addOnSuccessListener {
+            Toast.makeText(this, "✅ Attendance Marked for Roll: $roll", Toast.LENGTH_LONG).show()
+
+            // Resume camera for the next student
+            // Adding a small delay prevents accidental double scans
+            barcodeView.postDelayed({ barcodeView.resume() }, 2000)
         }
     }
 }

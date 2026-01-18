@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var logoutButton: Button
     private val auth = FirebaseAuth.getInstance()
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "UnsafeIntentLaunch")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,11 +39,16 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FingerprintActivity::class.java)
             startActivity(intent)
         }
-        // Button to open Admin Panel
+        // Button to open Admin Panel`
+        // Corrected Admin Button in MainActivity.kt
         val adminButton = findViewById<Button>(R.id.btnAdminPanel)
         adminButton.setOnClickListener {
-            startActivity(Intent(this, AdminActivity::class.java))
+            val adminIntent = Intent(this, DashboardActivity::class.java)
+            // This ensures the activity opens correctly without crashing the task stack
+            adminIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(adminIntent)
         }
+
         // Button to open Enroll Students
         val enrollButton = findViewById<Button>(R.id.EnrollButton)
          enrollButton.setOnClickListener {

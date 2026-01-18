@@ -1,0 +1,40 @@
+# PROJECT SUPERNOVA: Attendance App 2.0 Roadmap
+
+## 1. Project Goal
+Transform the current XML-based, monolithic attendance app into a modern, offline-first, secure Android application using Jetpack Compose, MVVM Architecture, and Advanced Hardware integrations.
+
+## 2. Tech Stack Upgrade
+- **UI:** XML Layouts -> Jetpack Compose (Declarative UI)
+- **Architecture:** Monolithic Activity -> MVVM (Model-View-ViewModel) with Hilt (Dependency Injection)
+- **Database:** Firebase Firestore (Cloud) + Room (Local Cache for Offline Mode)
+- **Async:** Callbacks -> Kotlin Coroutines & Flow
+- **Charts:** MPAndroidChart -> Vico or YCharts (Compose native)
+- **Security:** SharedPreferences -> EncryptedSharedPreferences & BiometricPrompt
+
+## 3. Phase-by-Phase Execution Plan
+
+### Phase 1: The Foundation (Architecture & Login)
+- [ ] Setup Hilt for Dependency Injection.
+- [ ] Create `AuthViewModel` to handle Login/Register logic.
+- [ ] Migrate `RegisterActivity` and `LoginActivity` to Compose Screens.
+- [ ] Implement Biometric Login (Fingerprint) in the Login Screen.
+
+### Phase 2: The Student Dashboard (Replacing activity_student.xml)
+- [ ] Create `StudentDashboardScreen.kt` in Compose.
+- [ ] Re-implement the "Hello Student" header and Bell icon.
+- [ ] Replace static banners with a clickable, auto-scrolling `HorizontalPager`.
+- [ ] Replace MPAndroidChart with animated Compose Charts (Pie/Line).
+- [ ] Add the "Missing" Features:
+    - [ ] "Grades" Card (clickable).
+    - [ ] "Time Table" Card (clickable).
+    - [ ] "Assignments" Card.
+
+### Phase 3: The "Next Level" Features (Hardware)
+- [ ] **Geofencing:** Add logic to check GPS before marking attendance.
+- [ ] **Dynamic QR:** Generate a QR code that rotates every 10 seconds (TOTP).
+- [ ] **Notifications:** Local notifications for low attendance.
+
+### Phase 4: Teacher/Admin Module
+- [ ] Create a separate login type for Teachers.
+- [ ] Build a QR Scanner screen (using CameraX) to scan student phones.
+- [ ] Add "Export to CSV" feature for reports.

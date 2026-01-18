@@ -1,92 +1,167 @@
 package com.attendanceapp.myapplication
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.attendanceapp.myapplication.viewmodel.AuthState
+import com.attendanceapp.myapplication.viewmodel.AuthViewModel
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : ComponentActivity() {
 
-    private lateinit var nameEditText: EditText
-    private lateinit var emailEditText: EditText
-    private lateinit var rollEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var confirmPasswordEditText: EditText
-    private lateinit var registerButton: Button
-    private lateinit var loginLink: TextView
+    private val viewModel: AuthViewModel by viewModels()
 
-    private lateinit var auth: FirebaseAuth
-    private val db = FirebaseFirestore.getInstance()
-
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
 
-        nameEditText = findViewById(R.id.nameEditText)
-        emailEditText = findViewById(R.id.emailEditText)
-        rollEditText = findViewById(R.id.rollEditText)
-        passwordEditText = findViewById(R.id.passwordEditText)
-        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText)
-        registerButton = findViewById(R.id.registerButton)
-        loginLink = findViewById(R.id.loginLink)
+        setContent {
+            val authState by viewModel.authState.collectAsState()
 
-        auth = FirebaseAuth.getInstance()
-
-        registerButton.setOnClickListener {
-            val name = nameEditText.text.toString().trim()
-            val email = emailEditText.text.toString().trim()
-            val roll = rollEditText.text.toString().trim()
-            val password = passwordEditText.text.toString().trim()
-            val confirmPassword = confirmPasswordEditText.text.toString().trim()
-
-            if (name.isEmpty() || email.isEmpty() || roll.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (password != confirmPassword) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    val uid = auth.currentUser?.uid ?: return@addOnSuccessListener
-                    val prefs = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE)
-                    prefs.edit().apply {
-                    putString("roll", roll)
-                        putString("name", name)
-                        apply()
+            // Watch for Success/Error side effects
+            LaunchedEffect(authState) {
+                when (authState) {
+                    is AuthState.Success -> {
+                        Toast.makeText(this@RegisterActivity, "Registration Successful!", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@RegisterActivity, StudentActivity::class.java))
+                        finish()
                     }
-
-                    val student = hashMapOf(
-                        "name" to name,
-                        "email" to email,
-                        "roll" to roll
-                    )
-
-                    db.collection("Users").document(uid).set(student)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "✅ Registered Successfully", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, StudentActivity::class.java))
-                            finish()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "❌ Failed to save student data", Toast.LENGTH_SHORT).show()
-                        }
+                    is AuthState.Error -> {
+                        Toast.makeText(this@RegisterActivity, (authState as AuthState.Error).message, Toast.LENGTH_LONG).show()
+                        viewModel.resetState() // Reset so toast doesn't show again on rotate
+                    }
+                    else -> {}
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "❌ ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+
+            RegisterScreen(
+                isLoading = authState is AuthState.Loading,
+                onRegisterClick = { email, pass, name, roll ->
+                    viewModel.registerUser(email, pass, name, roll)
+                },
+                onLoginLinkClick = {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
                 }
+            )
         }
-        val loginLink: TextView = findViewById(R.id.loginLink)
-        loginLink.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+    }
+}
+
+@Composable
+fun RegisterScreen(
+    isLoading: Boolean,
+    onRegisterClick: (String, String, String, String) -> Unit,
+    onLoginLinkClick: () -> Unit
+) {
+    var name by remember { mutableStateOf("") }
+    var roll by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surfaceVariant),
+        contentAlignment = Alignment.Center
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .padding(16.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .verticalScroll(rememberScrollState()), // Make it scrollable for small screens
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    "Create Account",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text("Join the classroom today", fontSize = 14.sp, color = Color.Gray)
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Full Name") },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = roll,
+                    onValueChange = { roll = it },
+                    label = { Text("Roll Number") },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = email,
+                    onValueChange = { email = it },
+                    label = { Text("Email") },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Password") },
+                    visualTransformation = PasswordVisualTransformation(),
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                if (isLoading) {
+                    CircularProgressIndicator()
+                } else {
+                    Button(
+                        onClick = { onRegisterClick(email, password, name, roll) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text("REGISTER", fontWeight = FontWeight.Bold)
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+                TextButton(onClick = onLoginLinkClick) {
+                    Text("Already have an account? Login")
+                }
+            }
         }
     }
 }

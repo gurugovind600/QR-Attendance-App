@@ -40,7 +40,7 @@
         </activity>
         <activity android:name="QRScannerActivity" />
         <activity android:name=".FingerprintActivity" />
-        <activity android:name=".AdminActivity" />
+        <activity android:name=".DashboardActivity" />
         <activity android:name=".FingerprintEnrollActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".StudentActivity" />
